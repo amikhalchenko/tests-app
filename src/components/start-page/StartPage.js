@@ -16,121 +16,127 @@ import AuthAppBarControls from '../auth-app-bar-controls/AuthAppBarControls';
 import LogInDialog from "../log-in-dialog/LogInDialog";
 import SignUpDialog from "../sign-up-dialog/SignUpDialog";
 import StartTestsDialog from "../start-tests-dialog/StartTestsDialog";
+import {BrowserRouter as Router, Route, Link} from "react-router-dom";
 
 class StartPage extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      isDrawerOpen: false,
-      isLoginDialogOpen: false,
-      isSignUpDialogOpen: false,
-      isStartTestsDialogOpen: false
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            isDrawerOpen: false,
+            isLoginDialogOpen: false,
+            isSignUpDialogOpen: false,
+            isStartTestsDialogOpen: false
+        };
 
-  }
-
-  loginDialogHandler = () => {
-    this.setState({
-      isDrawerOpen: false,
-      isLoginDialogOpen: !this.state.isLoginDialogOpen
-    });
-  };
-
-  signUpDialogHandler = () => {
-    this.setState({
-      isDrawerOpen: false,
-      isSignUpDialogOpen: !this.state.isSignUpDialogOpen
-    });
-  };
-
-  startTestsDialogHandler = () => {
-    this.setState({
-      isDrawerOpen: false,
-      isStartTestsDialogOpen: !this.state.isStartTestsDialogOpen
-    })
-  };
-
-  toggleDrawer(event) {
-    if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return;
     }
 
-    this.setState({ isDrawerOpen: !this.state.isDrawerOpen });
-  }
+    loginDialogHandler = () => {
+        this.setState({
+            isDrawerOpen: false,
+            isLoginDialogOpen: !this.state.isLoginDialogOpen
+        });
+    };
 
-  startTest =() =>{
-    console.log(this.props.startTest());
-  }
+    signUpDialogHandler = () => {
+        this.setState({
+            isDrawerOpen: false,
+            isSignUpDialogOpen: !this.state.isSignUpDialogOpen
+        });
+    };
 
-  render() {
-    return (
-      <div>
-        {/* App bar */}
-        <AppBar position="static" color="default">
-          <Toolbar>
-            <Menu onClick={(e) => this.toggleDrawer(e)} className="menuIcon" />
-            <Typography className="appBarTitle" variant="h6" color="inherit">
-              Tests App
-            </Typography>
+    startTestsDialogHandler = () => {
+        this.setState({
+            isDrawerOpen: false,
+            isStartTestsDialogOpen: !this.state.isStartTestsDialogOpen
+        })
+    };
 
-            <AuthAppBarControls
-              loginDialogHandler={this.loginDialogHandler}
-              signUpDialogHandler={this.signUpDialogHandler}
-            />
+    toggleDrawer(event) {
+        if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+            return;
+        }
 
-          </Toolbar>
-        </AppBar>
+        this.setState({isDrawerOpen: !this.state.isDrawerOpen});
+    }
 
-        {/* Drawer */}
-        <Drawer open={this.state.isDrawerOpen} onClose={(e) => this.toggleDrawer(e)}>
-          <List>
-            <ListItem button onClick={this.signUpDialogHandler}>
-              <ListItemIcon><AccountCircle /></ListItemIcon>
-              <ListItemText>Create account</ListItemText>
-            </ListItem>
+    render() {
+        return (
+            <div>
+                {/* App bar */}
+                <AppBar position="static" color="default">
+                    <Toolbar>
+                        <Menu onClick={(e) => this.toggleDrawer(e)} className="menuIcon"/>
+                        <Typography className="appBarTitle" variant="h6" color="inherit">
+                            Tests App
+                        </Typography>
 
-            <ListItem button onClick={this.loginDialogHandler}>
-              <ListItemIcon>
-                <SvgIcon>
-                  <path fill="#000000"
-                    d="M10,17V14H3V10H10V7L15,12L10,17M10,2H19A2,2 0 0,1 21,4V20A2,2 0 0,1 19,22H10A2,2 0 0,1 8,20V18H10V20H19V4H10V6H8V4A2,2 0 0,1 10,2Z" />
-                </SvgIcon>
-              </ListItemIcon>
-              <ListItemText>Log In</ListItemText>
-            </ListItem>
-          </List>
-        </Drawer>
+                        <AuthAppBarControls
+                            loginDialogHandler={this.loginDialogHandler}
+                            signUpDialogHandler={this.signUpDialogHandler}
+                        />
 
-        {/* Main content */}
-        <div className="mainContent">
-          <Typography className="mainContentText" variant="h3">
-            You don't know programming!
-          </Typography>
-          <Typography className="mainContentText" variant="h4">
-            Prove your skills with our tests
-          </Typography>
+                    </Toolbar>
+                </AppBar>
 
-          <Button variant="contained" color="primary" onClick={this.startTestsDialogHandler}
-          className="startTestsButton">
+                {/* Drawer */}
+                <Drawer open={this.state.isDrawerOpen} onClose={(e) => this.toggleDrawer(e)}>
+                    <List>
+                        <ListItem button onClick={this.signUpDialogHandler}>
+                            <ListItemIcon><AccountCircle/></ListItemIcon>
+                            <ListItemText>Sign Up</ListItemText>
+                        </ListItem>
 
-            Start Tests
-          </Button>
+                        <ListItem button onClick={this.loginDialogHandler}>
+                            <ListItemIcon>
+                                <SvgIcon>
+                                    <path fill="#000000"
+                                          d="M10,17V14H3V10H10V7L15,12L10,17M10,2H19A2,2 0 0,1 21,4V20A2,2 0 0,1 19,22H10A2,2 0 0,1 8,20V18H10V20H19V4H10V6H8V4A2,2 0 0,1 10,2Z"/>
+                                </SvgIcon>
+                            </ListItemIcon>
+                            <ListItemText>Log In</ListItemText>
+                        </ListItem>
 
-          <div className="shadow"></div>
+                        <ListItem button>
+                            <ListItemIcon>
+                                <SvgIcon>
+                                    <path fill="#000000"
+                                          d="M16,17V14H9V10H16V7L21,12L16,17M14,2A2,2 0 0,1 16,4V6H14V4H5V20H14V18H16V20A2,2 0 0,1 14,22H5A2,2 0 0,1 3,20V4A2,2 0 0,1 5,2H14Z"/>
+                                </SvgIcon>
+                            </ListItemIcon>
+                            <ListItemText>Log Out</ListItemText>
+                        </ListItem>
+                    </List>
+                </Drawer>
 
-        </div>
+                {/* Main content */}
+                <div className="mainContent">
+                    <Typography className="mainContentText" variant="h3">
+                        You don't know programming!
+                    </Typography>
+                    <Typography className="mainContentText" variant="h4">
+                        Prove your skills with our tests
+                    </Typography>
+                    <Button variant="contained" color="primary" onClick={this.startTestsDialogHandler}
+                            className="startTestsButton">
+                        Start Tests
+                    </Button>
 
-        <LogInDialog open={this.state.isLoginDialogOpen} loginDialogHandler={this.loginDialogHandler} />
+                    <div className="shadow"/>
 
-        <SignUpDialog open={this.state.isSignUpDialogOpen} signUpDialogHandler={this.signUpDialogHandler} />
+                </div>
 
-        <StartTestsDialog open={this.state.isStartTestsDialogOpen} startTestsDialogHandler={this.startTestsDialogHandler}/>
+                <LogInDialog open={this.state.isLoginDialogOpen} loginDialogHandler={this.loginDialogHandler}/>
+
+                <SignUpDialog open={this.state.isSignUpDialogOpen} signUpDialogHandler={this.signUpDialogHandler}/>
+
+                <StartTestsDialog open={this.state.isStartTestsDialogOpen}
+                                  startTestsDialogHandler={this.startTestsDialogHandler}/>
 
 
-      </div>
-    )
-  }
+            </div>
+        )
+    }
 }
 
 export default StartPage;

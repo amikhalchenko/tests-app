@@ -12,6 +12,7 @@
 
 .mainContent {
   background: url("https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/e44dc779052065.5cb72aab58fc6.jpg") no-repeat center;
+  background-size: cover;
   height:100vh;
   display: flex;
   flex-direction: column;
