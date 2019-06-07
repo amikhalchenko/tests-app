@@ -2,71 +2,42 @@ import React from 'react';
 import './UserAccount.css';
 import UserAccountHeader from "../user-account-header/UserAccountHeader";
 import PassedTest from "../passed-test/PassedTest";
+import axios from 'axios';
+import {Redirect} from "react-router-dom";
 
 export default class UserAccount extends React.Component {
 
-    testsResults = [
-        {
-            date: '06/06/2019',
-            topics: [
-                'HTML/CSS',
-                'Алгоритми',
-                'Бази данних',
-                'OOP',
-                'Data Science',
-                'One more theme'
-            ],
-            rightAnswersPercentage: '50%'
-        },
-        {
-            date: '06/06/2019',
-            topics: [
-                'HTML/CSS',
-                'Алгоритми',
-                'Бази данних',
-                'OOP',
-                'Data Science',
-                'One more theme'
-            ],
-            rightAnswersPercentage: '50%'
-        },
-        {
-            date: '06/06/2019',
-            topics: [
-                'HTML/CSS',
-                'Алгоритми',
-                'Бази данних',
-                'OOP',
-                'Data Science',
-                'One more theme'
-            ],
-            rightAnswersPercentage: '50%'
-        },
-        {
-            date: '06/06/2019',
-            topics: [
-                'HTML/CSS',
-                'Алгоритми',
-                'Бази данних',
-                'OOP',
-                'Data Science',
-                'One more theme'
-            ],
-            rightAnswersPercentage: '50%'
+    state = {
+        userAccount: {}
+    };
+
+    componentDidMount() {
+
+        if (localStorage.getItem('auth-token') !== null) {
+            axios.get('/account')
+                .then(res => {
+                    console.log(res);
+                })
         }
-    ];
+
+    }
 
     render() {
+
+        if (localStorage.getItem('auth-token') === null) {
+            return <Redirect to='/'/>
+        }
+
         return (
             <div>
-                <UserAccountHeader />
+                <UserAccountHeader/>
                 <div className="userPassedTests">
                     {
-                        this.testsResults.map(test => {
-                            return (
-                                <PassedTest testInformation={test}/>
-                            )
-                        })
+                        // this.testsResults.map(test => {
+                        //     return (
+                        //         <PassedTest testInformation={test}/>
+                        //     )
+                        // })
                     }
                 </div>
             </div>
