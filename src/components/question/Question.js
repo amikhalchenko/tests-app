@@ -46,7 +46,7 @@ export default class Question extends Component {
             <div className="test">
                 < QuizTimeLine currentNumberOfQuestion={this.props.currentNumberOfQuestion} numberOfQuestions={this.props.numberOfQuestions} />
                 <FormControl component="fieldset">
-                    <FormLabel component="legend">{name}</FormLabel>
+                    <FormLabel component="legend" className="question-name" >{name}</FormLabel>
                     <RadioGroup
                         value={this.state.value}
                         onChange={this.handleChange}

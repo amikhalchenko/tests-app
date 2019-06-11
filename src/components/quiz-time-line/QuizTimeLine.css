@@ -1,33 +1,40 @@
 .quiz_timeline {
+    display: inline-flex;
+    justify-content: center;
+    margin-bottom: 18vh;
+    margin-top: 20vh;
+    flex-wrap: wrap;
     font-size: 12px;
     line-height: 20px;
+    max-width: 60vw;
     padding: 5px;
-    white-space: nowrap;
     border: 2px solid #eee;
     border-radius: 20px;
 }
 .quiz_timeline__number_current {
-    display: inline-block;
+    display: inline-flex;
+    justify-content: center;
+    flex-wrap: wrap;
     border-radius: 10px;
     background: #f8ab47;
     color: #fff;
 }
 
 .num_for_timeline {
-    display: inline-block;
+    display: inline-flex;
+    justify-content: center;
+    flex-wrap: wrap;
     width: 20px;
     height: 20px;
     margin: 0 8px;
-    line-height: inherit;
-    text-align: center;
     color: #f8ab47;
 }
 
 .num_for_timeline_ {
-    display: inline-block;
+    display: inline-flex;
+    justify-content: center;
     width: 20px;
     height: 20px;
     margin: 0 8px;
     line-height: inherit;
-    text-align: center;
 }

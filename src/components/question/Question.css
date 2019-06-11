@@ -2,19 +2,23 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: end;
     align-items: center;
 }
 fieldset{
-    width: 400px;
-    margin-top: 50px!important;
+    width: 500px;
 }
 .MuiFormLabel-root {
-    width: 400px;
+    width: auto;
+    margin-bottom: 5vh;
     display: flex;
     justify-content: center;
 }
 .numberOfCurrentQuestion{
-    font-size: 70px;
     margin-left: -50px;
+}
+
+.question-name{
+    font-size: 34px!important;
+    padding-left: 30px!important;
 }
