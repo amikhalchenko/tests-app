@@ -48,7 +48,7 @@ export default class ResultBySubjectsContainer extends Component {
         // }
 
         return (
-            <div>
+            <div className = "stats">
                 <Switch
                     checked={this.state.isCards}
                     onChange={this.switchHandleChange('IsCarards')}
@@ -60,10 +60,10 @@ export default class ResultBySubjectsContainer extends Component {
 
                 this.state.IsCarards
                     ? (
-                        <ResultBySubjectsCards topicsResult={this.state.topicsResult}/>
+                        <ResultBySubjectsGraph topicsResult={this.state.topicsResult}/>
                     )
                     : (
-                        <ResultBySubjectsGraph topicsResult={this.state.topicsResult}/>
+                        <ResultBySubjectsCards topicsResult={this.state.topicsResult}/>
                     )
             }
             </div>

@@ -7,7 +7,7 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 export default class ResultBySubjectsGraph extends Component {
     state = {
-        theme: "dark2",
+        theme: "dark1",
         title: {
             text: "Result by topics"
         },
@@ -28,24 +28,9 @@ export default class ResultBySubjectsGraph extends Component {
     }
 
     render() {
-        // const options = {
-        //     animationEnabled: true,
-        //     theme: "dark2",
-        //     title: {
-        //         text: "Result by topics"
-        //     },
-        //     data: [{
-        //         type: "column",
-        //         dataPoints: [
-        //             {label: "Бази даних", y: 33},
-        //             {label: "Алгоритми", y: 50},
-        //             {label: "ООП", y: 100}
-        //         ]
-        //     }]
-        // }
         console.log(this.state);
         return(
-            <div>
+            <div className = "chart">
                 <CanvasJSChart options = {this.state}/>
             </div>
         )
