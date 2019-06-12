@@ -16,16 +16,15 @@
 }
 
 .userPassedTests>div>div{
-    background-color: rgba(222,208,0,0.33)!important;
+    background-color: rgba(68,222,30,0.33)!important;
 }
 
 .userPassedTests h6{
-    background-color: rgba(190,180,0,0.33)!important;
+    background-color: rgba(68,222,30,0.33)!important;
     text-align: center;
     border-style: solid;
     border-color: #949494;
     border-width: 1px 1px 1px 1px;
-    box-shadow: 5px 5px 3px rgba(222,208,0,0.33)!important;
     border-radius: 20px;
     padding: 5px;
     min-width: 100px;
