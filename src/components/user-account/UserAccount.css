@@ -1,7 +1,23 @@
 .userPassedTests {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 250px;
     flex-wrap: wrap;
+}
+.userPassedTests>div{
+    display: flex;
+    box-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+    border-style: solid;
+    border-color: #949494;
+    border-width: 1px 2px 2px 1px;
+    margin: 20px;
+    text-align: center;
+}
+.userPassedTests h6{
+    border-style: solid;
+    border-color: #949494;
+    border-width: 1px 0px 0px 1px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px rgb(148, 148, 148);
+    padding: 5px;
+    min-width: 100px;
+    margin-bottom: 5px;
 }
