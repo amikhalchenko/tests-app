@@ -1,0 +1,9 @@
+.test-result{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h3{
+    font-family: "Verdana";
+}
