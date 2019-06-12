@@ -1,4 +1,7 @@
 .userPassedTests {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 250px;
     flex-wrap: wrap;
 }
