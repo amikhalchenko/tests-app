@@ -30,15 +30,15 @@ export default class TotalResultTesting extends Component {
     render() {
         return (
             <div className="totalResult">
-                <div className="number">{this.state.totalCountOfCorrectAnswers} of {this.state.totalCountOfQuestions}</div>
-                <div className="percent">{(this.state.totalPercent).toFixed(2)}%</div>
+                <div className="border">
+                    <div className="number">Answers: {this.state.totalCountOfCorrectAnswers} of {this.state.totalCountOfQuestions}</div>
+                    <div className="percent">{(this.state.totalPercent).toFixed(2)}%</div>
+                </div>
                 <div className="more">
-
                     <Route render={({history}) => (
                         <Button variant="contained" color="primary" onClick={() => {
                             history.push('/detailed-result',
-                                this.props.sessionId
-                            )
+                                this.props.sessionId)
                         }}>
                             Statistic
                             <AssessmentIcon/>
@@ -46,7 +46,6 @@ export default class TotalResultTesting extends Component {
                     )}/>
                 </div>
             </div>
-
         );
     }
 }
