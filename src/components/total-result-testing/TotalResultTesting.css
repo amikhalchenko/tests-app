@@ -2,7 +2,21 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     height: 100%;
+}
+.border {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start!important;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 10px;
+    margin-right: 5px;
+    padding-top: 25px;
+    width: 360px;
+    height: 160px;
+    box-shadow: 0 0 10px ;
 }
 .number, .percent{
     font-size: 30px;
@@ -14,9 +28,15 @@
 }
 .percent {
     margin-bottom: 100px;
+<<<<<<< HEAD
     font-size: 30px;
+=======
+    font-size: 50px;
+>>>>>>> cfe08a36993f3ea1e6d0e1cea603b366651167e5
 }
 .more{
+    padding-top: 20px;
     display: flex;
     justify-content: center;
 }
+
