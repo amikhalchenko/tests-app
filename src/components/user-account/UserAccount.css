@@ -2,21 +2,31 @@
     display: flex;
     flex-wrap: wrap;
 }
+
 .userPassedTests>div{
     display: flex;
-    box-shadow: 3px 3px 6px rgba(0,0,0,0.5);
     border-style: solid;
     border-color: #949494;
     border-width: 1px 2px 2px 1px;
+    border-radius: 5px;
+    box-shadow: 5px 5px 10px rgb(148, 148, 148);
     margin: 20px;
-    text-align: center;
+    font-size: 20px;
+    font-family: Arial;
 }
+
+.userPassedTests>div>div{
+    background-color: rgba(222,208,0,0.33)!important;
+}
+
 .userPassedTests h6{
+    background-color: rgba(190,180,0,0.33)!important;
+    text-align: center;
     border-style: solid;
     border-color: #949494;
-    border-width: 1px 0px 0px 1px;
-    border-radius: 10px;
-    box-shadow: 5px 5px 5px rgb(148, 148, 148);
+    border-width: 1px 1px 1px 1px;
+    box-shadow: 5px 5px 3px rgba(222,208,0,0.33)!important;
+    border-radius: 20px;
     padding: 5px;
     min-width: 100px;
     margin-bottom: 5px;
