@@ -30,7 +30,7 @@ import UserAccountStatistic from "./components/user-account-statistic/UserAccoun
 export const ADMIN_SECRET = '1111';
 export const USER_SECRET = '2222';
 
-export function decodeFromUserUrlToBase64(str) {
+export function decodeTopicsFromUserUrlToBase64(str) {
     const topicsStr = str.substring(6);
     const topics = topicsStr.split('+')
         .map(topic => topic.replace('&', '/'))
@@ -43,6 +43,17 @@ export function decodeFromUserUrlToBase64(str) {
             }
         });
     return Buffer.from(JSON.stringify(topics)).toString('base64');
+}
+
+export function encodeTopicsToUserUrl(topics) {
+    const baseUrl = 'http://localhost:3000/questions/guest=';
+    const encodedTopics = topics
+        .map(topic => topic.name + '^' + topic.id)
+        .map(topic => topic.replace(' ', '_'))
+        .map(topic => topic.replace('/', '&'))
+        .reduce((reducer, currentValue) => reducer + '+' + currentValue);
+
+    return baseUrl + encodedTopics;
 }
 
 (function () {
@@ -269,7 +280,10 @@ export default class App extends Component {
                                                  signUpDialogHandler={this.signUpDialogHandler}/>)
                     }/>
                     <Route path="/questions/:id" component={TestsLinkResolver}/>
-                    <Route path="/account" render={() => (<UserAccount isCurator={this.state.isCurator}/>)}/>
+                    <Route path="/account" render={() => (<UserAccount
+                        isCurator={this.state.isCurator}
+                        testsLinkDialogHandler={this.testsLinkDialogHandler}/>)
+                    }/>
                     <Route path="/user-statistic" component={UserAccountStatistic}/>
                     <Route path="/detailed-result"
                            render={(props) => (<ResultBySubjectsContainer sessionId={props.location.state}/>)}/>

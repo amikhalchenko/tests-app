@@ -7,7 +7,7 @@ import ResultBySubjectsContainer from "../result-by-subjects/ResultBySubjectsCon
 import DifficultyDialog from '../difficulty-dialog/DifficultyDialog'
 import {withRouter, Route, Redirect} from 'react-router-dom';
 import LinkAlreadyUsedDialog from "../link-already-used-dialog/LinkAlreadyUsedDialog";
-import {decodeFromUserUrlToBase64} from "../../App";
+import {decodeTopicsFromUserUrlToBase64} from "../../App";
 
 
 export default class TestPassing extends Component {
@@ -85,7 +85,7 @@ export default class TestPassing extends Component {
             if (this.state.paramsId !=='') {
 
                 if (this.state.paramsId.includes('guest')) {
-                    axios.get('/quiz/' + decodeFromUserUrlToBase64(this.state.paramsId))
+                    axios.get('/quiz/' + decodeTopicsFromUserUrlToBase64(this.state.paramsId))
                         .then(res => {
                             this.setState((state) => {
                                 state.currentNumberOfQuestion = res.data.countOfPassedQuestions + 1 || 1;

@@ -41,7 +41,7 @@ export default class UserAccount extends React.Component {
                         {
                             this.state.account.results.map((passedTest, index) => {
                                 return (
-                                    <PassedTest key={index} testInformation={
+                                    <PassedTest testsLinkDialogHandler={this.props.testsLinkDialogHandler} key={index} testInformation={
                                         {
                                             date: passedTest.date,
                                             topics: passedTest.topics,
