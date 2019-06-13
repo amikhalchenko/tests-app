@@ -1,0 +1,22 @@
+.menu {
+    display: none !important;
+}
+
+@media screen and (min-width: 750px) {
+
+    .menu {
+        display: flex !important;
+        justify-content: flex-end !important;
+    }
+}
+
+.Appbar {
+    display: flex;
+    flex-direction: row;
+    height: 70px;
+}
+
+
+.userAccountButton {
+    width: 250px !important;
+}

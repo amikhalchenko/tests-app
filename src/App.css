@@ -1,0 +1,57 @@
+.router {
+    height: 100%;
+}
+
+.MuiToolbar-regular {
+    display: block;
+}
+
+.menuIcon {
+    display: block;
+}
+
+.appBarAuthControls {
+    display: none !important;
+}
+
+.userLogo {
+    width: 40px;
+    height: 33px;
+    background-color: coral;
+    color: white !important;
+    border-radius: 50%;
+    padding-top: 5px;
+    text-align: center;
+}
+
+.userName {
+    margin-left: 10px !important;
+}
+
+.MuiSvgIcon-root {
+    margin-left: 10px !important;
+}
+
+
+@media screen and (min-width: 750px) {
+
+    .MuiToolbar-regular {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .menuIcon {
+        display: none !important;
+    }
+
+    .appBarAuthControls {
+        display: flex !important;
+        margin-left: 50%;
+        justify-content: space-between;
+        width: 230px;
+    }
+}
+
+.MuiDialogContent-root {
+    overflow: hidden !important;
+}

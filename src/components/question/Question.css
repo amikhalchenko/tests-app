@@ -2,14 +2,35 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: end;
     align-items: center;
 }
 fieldset{
-    width: 400px;
+    border-style: solid!important;
+    border-color: #949494!important;
+    border-width: 2px 0px 0px 2px!important;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px rgb(148, 148, 148);
+    padding: 5px!important;
+    width: 450px!important;
 }
 .MuiFormLabel-root {
-    width: 400px;
+    width: auto;
     display: flex;
     justify-content: center;
+}
+.numberOfCurrentQuestion{
+    margin-left: -50px;
+}
+.form{
+    border: 2px solid rgb(148, 148, 148)!important;
+    border-radius: 20px;
+    padding: 5px!important;
+}
+.question-name{
+    font-size: 34px!important;
+    padding-left: 30px!important;
+}
+.submit-ansver-button{
+    margin-top: 20px!important;
 }

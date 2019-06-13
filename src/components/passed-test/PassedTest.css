@@ -1,0 +1,38 @@
+.passedTest {
+    margin-top: 10px;
+}
+
+.date {
+}
+
+.topics {
+}
+
+.chip {
+    margin: 3px;
+}
+
+.rightAnswersPercentage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.MuiCard-root {
+
+}
+
+@media screen and (min-width: 400px) {
+
+    .passedTest {
+        width: 400px;
+       margin-left: 15px;
+   }
+}

@@ -12,23 +12,6 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import { emphasize } from '@material-ui/core/styles/colorManipulator';
 import PropTypes from 'prop-types';
 
-const suggestions = [
-  { label: 'Java' },
-  { label: 'JavaScript' },
-  { label: 'OOP' },
-  { label: 'Algorithms' },
-  { label: 'Data Structures' },
-  { label: 'Computer Science' },
-  { label: 'C#' },
-  { label: 'C++' },
-  { label: 'Python' },
-  { label: 'Machine Learning' },
-  { label: 'Data Analyse' },
-  { label: 'Data Science' },
-].map(suggestion => ({
-  value: suggestion.label,
-  label: suggestion.label
-}));
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -52,8 +35,8 @@ const useStyles = makeStyles(theme => ({
   },
   chipFocused: {
     backgroundColor: emphasize(
-      theme.palette.type === 'light' ? theme.palette.grey[300] : theme.palette.grey[700],
-      0.08
+        theme.palette.type === 'light' ? theme.palette.grey[300] : theme.palette.grey[700],
+        0.08
     ),
   },
   noOptionsMessage: {
@@ -82,13 +65,13 @@ const useStyles = makeStyles(theme => ({
 
 function NoOptionsMessage(props) {
   return (
-    <Typography
-      color="textSecondary"
-      className={props.selectProps.classes.noOptionsMessage}
-      {...props.innerProps}
-    >
-      {props.children}
-    </Typography>
+      <Typography
+          color="textSecondary"
+          className={props.selectProps.classes.noOptionsMessage}
+          {...props.innerProps}
+      >
+        {props.children}
+      </Typography>
   );
 }
 
@@ -108,19 +91,19 @@ inputComponent.propTypes = {
 
 function Control(props) {
   return (
-    <TextField
-      fullWidth
-      InputProps={{
-        inputComponent,
-        inputProps: {
-          className: props.selectProps.classes.input,
-          inputRef: props.innerRef,
-          children: props.children,
-          ...props.innerProps,
-        },
-      }}
-      {...props.selectProps.TextFieldProps}
-    />
+      <TextField
+          fullWidth
+          InputProps={{
+            inputComponent,
+            inputProps: {
+              className: props.selectProps.classes.input,
+              inputRef: props.innerRef,
+              children: props.children,
+              ...props.innerProps,
+            },
+          }}
+          {...props.selectProps.TextFieldProps}
+      />
   );
 }
 
@@ -133,17 +116,17 @@ Control.propTypes = {
 
 function Option(props) {
   return (
-    <MenuItem
-      ref={props.innerRef}
-      selected={props.isFocused}
-      component="div"
-      style={{
-        fontWeight: props.isSelected ? 500 : 400,
-      }}
-      {...props.innerProps}
-    >
-      {props.children}
-    </MenuItem>
+      <MenuItem
+          ref={props.innerRef}
+          selected={props.isFocused}
+          component="div"
+          style={{
+            fontWeight: props.isSelected ? 500 : 400,
+          }}
+          {...props.innerProps}
+      >
+        {props.children}
+      </MenuItem>
   );
 }
 
@@ -157,13 +140,13 @@ Option.propTypes = {
 
 function Placeholder(props) {
   return (
-    <Typography
-      color="textSecondary"
-      className={props.selectProps.classes.placeholder}
-      {...props.innerProps}
-    >
-      {props.children}
-    </Typography>
+      <Typography
+          color="textSecondary"
+          className={props.selectProps.classes.placeholder}
+          {...props.innerProps}
+      >
+        {props.children}
+      </Typography>
   );
 }
 
@@ -175,9 +158,9 @@ Placeholder.propTypes = {
 
 function SingleValue(props) {
   return (
-    <Typography className={props.selectProps.classes.singleValue} {...props.innerProps}>
-      {props.children}
-    </Typography>
+      <Typography className={props.selectProps.classes.singleValue} {...props.innerProps}>
+        {props.children}
+      </Typography>
   );
 }
 
@@ -203,16 +186,16 @@ function MultiValue(props) {
   const rgb = `${red},${green},${blue}`;
 
   return (
-    <Chip
-      tabIndex={-1}
-      label={props.children}
-      className={clsx(props.selectProps.classes.chip, {
-        [props.selectProps.classes.chipFocused]: props.isFocused,
-      })}
-      style={{ backgroundColor: "rgb("+rgb+")" }}
-      onDelete={props.removeProps.onClick}
-      deleteIcon={<CancelIcon {...props.removeProps} />}
-    />
+      <Chip
+          tabIndex={-1}
+          label={props.children}
+          className={clsx(props.selectProps.classes.chip, {
+            [props.selectProps.classes.chipFocused]: props.isFocused,
+          })}
+          style={{ backgroundColor: "rgb("+rgb+")" }}
+          onDelete={props.removeProps.onClick}
+          deleteIcon={<CancelIcon {...props.removeProps} />}
+      />
   );
 }
 
@@ -225,9 +208,9 @@ MultiValue.propTypes = {
 
 function Menu(props) {
   return (
-    <Paper square className={props.selectProps.classes.paper} {...props.innerProps}>
-      {props.children}
-    </Paper>
+      <Paper square className={props.selectProps.classes.paper} {...props.innerProps}>
+        {props.children}
+      </Paper>
   );
 }
 
@@ -247,13 +230,21 @@ const components = {
   ValueContainer
 };
 
-function TestTopicsAutocomplete() {
+function TestTopicsAutocomplete(props) {
+  var suggestions = props.suggestions.map(suggestion => ({
+    value: suggestion.name,
+    label: suggestion.name,
+    id: suggestion.id,
+  }));
+  let selectedValue;
   const classes = useStyles();
   const theme = useTheme();
   const [multi, setMulti] = React.useState(null);
 
   function handleChangeMulti(value) {
     setMulti(value);
+    props.selectedTopics(value);
+    console.log(value);
   }
 
   const selectStyles = {
@@ -267,26 +258,26 @@ function TestTopicsAutocomplete() {
   };
 
   return (
-    <div className={classes.root}>
-      <NoSsr>
-        <Select
-          classes={classes}
-          styles={selectStyles}
-          TextFieldProps={{
-            label: 'Prove your skills',
-            InputLabelProps: {
-              shrink: true,
-            },
-          }}
-          options={suggestions}
-          components={components}
-          value={multi}
-          onChange={handleChangeMulti}
-          placeholder="Select all themes"
-          isMulti
-        />
-      </NoSsr>
-    </div>
+      <div className={classes.root}>
+        <NoSsr>
+          <Select
+              classes={classes}
+              styles={selectStyles}
+              TextFieldProps={{
+                label: 'Prove your skills',
+                InputLabelProps: {
+                  shrink: true,
+                },
+              }}
+              options={suggestions}
+              components={components}
+              value={multi}
+              onChange={handleChangeMulti}
+              placeholder="Select all themes"
+              isMulti
+          />
+        </NoSsr>
+      </div>
   );
 }
 

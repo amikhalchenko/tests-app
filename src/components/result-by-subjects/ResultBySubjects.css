@@ -1,7 +1,41 @@
 li {
-    list-style-type: none; 
+    list-style-type: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid black;
 }
 .result{
     display: flex;
     justify-content: center;
+    /*height: 100%;*/
+    align-items: center;
+}
+.topic{
+    border: 2px solid black;
+    border-radius: 10px;
+    margin-right: 5px;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 10px ;
+}
+
+
+ul{
+    padding-right: 40px;
+}
+.resultByTopics{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.startPageButton{
+    width: 150px;
+    margin-top: 100px!important;
 }

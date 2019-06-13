@@ -1,64 +1,37 @@
-.MuiToolbar-regular {
-  display: block;
+html {
+    overflow: hidden;
 }
-
 .appBarTitle {
-  margin-left: 20px !important;
-}
-
-.appBarAuthControls {
-  display: none !important;
+    margin-left: 20px !important;
+    cursor: pointer;
 }
 
 .mainContent {
-  background: url("https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/e44dc779052065.5cb72aab58fc6.jpg") no-repeat center;
-  background-size: cover;
-  height:100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    background: url("https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/e44dc779052065.5cb72aab58fc6.jpg") no-repeat center;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .shadow {
-  position: absolute;
-  width: 100%;
-  height: 100vh;
-  opacity: 0.2;
-  background-color: black;
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    opacity: 0.2;
+    background-color: black;
 }
 
 .startTestsButton {
-  margin-top: 20px !important;
-  z-index: 10;
+    margin-top: 20px !important;
+    z-index: 10;
 }
 
 .mainContentText {
-  color: white;
-  text-align: center;
-  margin-bottom: 20px !important;
-  z-index: 10;
-}
-
-.menuIcon {
-  display: block;
-}
-
-@media screen and (min-width: 750px) {
-
-  .MuiToolbar-regular {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .menuIcon {
-    display: none !important;
-  }
-
-  .appBarAuthControls {
-    display: flex !important;
-    margin-left: 50%;
-    justify-content: space-between;
-    width: 230px;
-  }
+    color: white;
+    text-align: center;
+    margin-bottom: 20px !important;
+    z-index: 10;
 }

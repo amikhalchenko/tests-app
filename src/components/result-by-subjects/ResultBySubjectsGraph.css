@@ -1,0 +1,15 @@
+html {
+    overflow: hidden;
+}
+.chart {
+    padding-left: 50px;
+    padding-right:50px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.canvasjs-chart-credit{
+    display: none!important;
+}

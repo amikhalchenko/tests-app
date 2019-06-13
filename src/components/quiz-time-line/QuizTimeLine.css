@@ -1,0 +1,40 @@
+.quiz_timeline {
+    display: inline-flex;
+    justify-content: center;
+    margin-bottom: 20vh;
+    margin-top: 10vh;
+    flex-wrap: wrap;
+    font-size: 12px;
+    line-height: 20px;
+    max-width: 60vw;
+    padding: 5px;
+    border: 2px solid #949494;
+    border-radius: 20px;
+}
+.quiz_timeline__number_current {
+    display: inline-flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    border-radius: 10px;
+    background: #f8ab47;
+    color: #fff;
+}
+
+.num_for_timeline {
+    display: inline-flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 20px;
+    height: 20px;
+    margin: 0 8px;
+    color: #f8ab47;
+}
+
+.num_for_timeline_ {
+    display: inline-flex;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    margin: 0 8px;
+    line-height: inherit;
+}
