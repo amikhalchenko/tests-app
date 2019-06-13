@@ -14,7 +14,7 @@ export default class GroupParticipant extends React.Component {
         return (
             <div>
                 {this.user.firstName + ' ' + this.user.lastName}
-                {': ' + this.user.quizResultDto.percentOfPassingQuiz + '%'}
+                {': ' + (this.user.quizResultDto.percentOfPassingQuiz).toFixed(2) + '%'}
             </div>
         );
     }

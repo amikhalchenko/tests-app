@@ -38,7 +38,7 @@ export default class UserAccount extends React.Component {
         if (this.state.account !== null && !this.props.isCurator) {
             return (
                 <div>
-                    <div>
+                    <div className="userPassedTests">
                         {
                             this.state.account.results.map((passedTest, index) => {
                                 return (
@@ -63,7 +63,7 @@ export default class UserAccount extends React.Component {
 
         if (this.state.account !== null && this.props.isCurator) {
             return (
-                <div>
+                <div className="userPassedTests">
                     {
                         this.state.account.map((group, index) => {
                             if (group !== null) {
