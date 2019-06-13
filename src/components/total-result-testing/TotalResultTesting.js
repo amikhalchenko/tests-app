@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import './TotalResultTesting.css';
 import axios from 'axios'
 import { withRouter, Route } from 'react-router-dom';
+import AssessmentIcon from '@material-ui/icons/Assessment';
 import Typography from "@material-ui/core/Typography";
 
 export default class TotalResultTesting extends Component {
@@ -43,17 +44,18 @@ export default class TotalResultTesting extends Component {
     render() {
         return (
             <div className="totalResult">
-                <div
-                    className="number">{this.state.totalCountOfCorrectAnswers} of {this.state.totalCountOfQuestions}</div>
-                <div className="percent">{(this.state.totalPercent).toFixed(2)}%</div>
+                <div className="border">
+                    <div className="number">Answers: {this.state.totalCountOfCorrectAnswers} of {this.state.totalCountOfQuestions}</div>
+                    <div className="percent">{(this.state.totalPercent).toFixed(2)}%</div>
+                </div>
                 <div className="more">
                     <Route render={({history}) => (
-                        <Button color="secondary" onClick={() => {
+                        <Button variant="contained" color="primary" onClick={() => {
                             history.push('/detailed-result',
-                                this.props.sessionId
-                            )
+                                this.props.sessionId)
                         }}>
-                            More
+                            Statistic
+                            <AssessmentIcon/>
                         </Button>
                     )}/>
 
@@ -64,7 +66,6 @@ export default class TotalResultTesting extends Component {
 
                 </div>
             </div>
-
         );
     }
 }
