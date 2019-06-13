@@ -186,7 +186,7 @@ class SignUpDialog extends React.Component {
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button color="primary" onClick={this.props.signUpDialogHandler}>
+                        <Button color="primary" onClick={() => this.props.signUpDialogHandler(false)}>
                             Cancel
                         </Button>
                         <Route render={({history}) => (
