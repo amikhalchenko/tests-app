@@ -11,6 +11,10 @@ export default class ResultBySubjectsGraph extends Component {
         title: {
             text: "Result by topics"
         },
+        axisY: {
+            maximum: 100
+        },
+        dataPointWidth: 50,
         data: [{
             type:"column",
             dataPoints: []

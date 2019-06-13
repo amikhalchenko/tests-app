@@ -2,3 +2,18 @@
     display: flex;
     flex-wrap: wrap;
 }
+
+.userPassedTests>div{
+    display: flex;
+    margin: 15px;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.userPassedTests h6{
+    font-size: 18px;
+    text-align: center;
+    border-radius: 11px;
+    min-width: 200px;
+    margin-bottom: 5px;
+}

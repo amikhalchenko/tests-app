@@ -3,6 +3,7 @@ import axios from 'axios';
 import ResultBySubjectsCards from "./ResultBySubjectsCards";
 import Switch from '@material-ui/core/Switch';
 import ResultBySubjectsGraph from "./ResultBySubjectsGraph";
+import './ResultBySubjectsContainer.css'
 
 
 export default class ResultBySubjectsContainer extends Component {
@@ -39,12 +40,15 @@ export default class ResultBySubjectsContainer extends Component {
         console.log(this.state.isCards)
         return (
             <div>
-                <Switch
-                    checked={this.state.isCards}
-                    onChange={this.switchHandleChange}
-                    value={this.state.isCards}
-                    inputProps={{ 'aria-label': 'secondary checkbox' }}
-                />
+                <div className = "test-result">
+                    <p>Statistic presentation</p>
+                    <Switch
+                        checked={this.state.isCards}
+                        onChange={this.switchHandleChange}
+                        value={this.state.isCards}
+                        inputProps={{ 'aria-label': 'secondary checkbox' }}
+                    />
+                </div>
 
             {
 
