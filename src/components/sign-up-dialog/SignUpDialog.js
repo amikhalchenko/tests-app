@@ -193,7 +193,7 @@ class SignUpDialog extends React.Component {
                             <Button color="primary" onClick={() => {
                                 this.registerUser(history)
                             }}>
-                                Log In
+                                Create Account
                             </Button>
                         )}/>
                     </DialogActions>
