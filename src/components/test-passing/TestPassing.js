@@ -24,6 +24,7 @@ export default class TestPassing extends Component {
         numberOfQuestions: 0,
         continueTestButton: false,
         isLinkTestAlreadyPassed: false,
+        paramsId: this.props.topics.paramsId
     }
     postQuestion = () => {
         axios.post('/questions', this.props.topics)
@@ -77,27 +78,44 @@ export default class TestPassing extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props.topics.countOfQuestionsInQuiz);
+        console.log(this.props);
+        if (this.props.topics.questionsFromLink || this.props.topics.questionsFromLink === null) {
+            console.log(this.state.paramsId);
+            if (this.state.paramsId !=='') {
+                axios.get('/questions/' + this.state.paramsId)
+                    .then(res => {
+                        this.setState((state) => {
+                            state.currentNumberOfQuestion = res.data.countOfPassedQuestions + 1 || 1;
+                            state.numberOfQuestions = res.data.countOfQuestionsInQuiz;
+                            state.questions = res.data.questions;
+                            state.sessionId = res.data.quizSession.id;
+                            state.isDataLoaded = true;
+                            state.isLinkTestAlreadyPassed = res.data.passed;
+                            return state;
+                        });
+                    });
 
-        if (this.props.topics.questionsFromLink || this.props.topics.questionsFromLink === null ) {
-            this.setState((state) => {
-                state.currentNumberOfQuestion = this.props.topics.countOfPassedQuestions + 1 || 1;
-                state.numberOfQuestions = this.props.topics.countOfQuestionsInQuiz;
-                state.questions = this.props.topics.questionsFromLink;
-                state.sessionId = this.props.topics.sessionId;
-                state.isDataLoaded = true;
-                state.isLinkTestAlreadyPassed = this.props.topics.passed;
-                return state;
-            });
+            } else {
+                this.setState((state) => {
+                    state.currentNumberOfQuestion = this.props.topics.countOfPassedQuestions + 1 || 1;
+                    state.numberOfQuestions = this.props.topics.countOfQuestionsInQuiz;
+                    state.questions = this.props.topics.questionsFromLink;
+                    state.sessionId = this.props.topics.sessionId;
+                    state.isDataLoaded = true;
+                    state.isLinkTestAlreadyPassed = this.props.topics.passed;
+                    state.paramsId = this.props.topics.paramsId;
+                    return state;
+                },()=> console.log(this.state.paramsId));
+
+            }
+
         } else {
 
             axios.post('/questions', this.props.topics)
                 .then(res => {
-                    console.log(res.data);
                     if (res.data.quizSession === null) {
                         this.setState({sessionId: undefined});
                     } else {
-                        console.log(res.data.sessionId === null);
                         this.setState((state) => {
                             state.currentNumberOfQuestion = res.data.countOfPassedQuestions + 1 || 1;
                             state.numberOfQuestions = res.data.countOfQuestionsInQuiz;
@@ -114,7 +132,6 @@ export default class TestPassing extends Component {
     }
 
     render() {
-        console.log(this.state.isLinkTestAlreadyPassed);
         if (this.state.sessionId === undefined || this.state.questions === null) {
             return (
 
@@ -125,7 +142,6 @@ export default class TestPassing extends Component {
         } else {
             if (this.state.isDataLoaded === true) {
                 if (this.state.showResultBySubjects === true) {
-                    console.log(this.state.showResultBySubjects);
                     return (<ResultBySubjectsContainer sessionId={this.state.sessionId}
                                                        showResultBySubjects={this.showResultBySubjects}/>)
                 } else if (this.state.questions[this.state.i] !== undefined) {

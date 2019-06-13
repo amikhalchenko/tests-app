@@ -29,6 +29,7 @@ export default class TestsLinkResolver extends React.Component {
         axios.get(url + quizRequestParam)
             .then(res => {
                 this.props.history.push('/quiz', {
+                    paramsId : this.props.match.params.id,
                     questionsFromLink: res.data.questions,
                     sessionId: res.data.quizSession.id,
                     countOfPassedQuestions: res.data.countOfPassedQuestions,
