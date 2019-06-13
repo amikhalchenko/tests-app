@@ -106,9 +106,7 @@ export default class App extends Component {
         })
     };
 
-    /**
-     * Admin only
-     */
+
     testsLinkDialogHandler = (link = '') => {
         this.setState({
             lastTestsLink: link,
@@ -249,7 +247,10 @@ export default class App extends Component {
 
                     <Route path="/" exact
                            render={() => (<StartPage startTestsDialogHandler={this.startTestsDialogHandler}/>)}/>
-                    <Route path="/quiz" exact render={(props) => (<TestPassing topics={props.location.state}/>)}/>
+                    <Route path="/quiz" exact render={
+                        (props) => (<TestPassing topics={props.location.state}
+                                                 testsLinkDialogHandler={this.testsLinkDialogHandler}/>)
+                    }/>
                     <Route path="/questions/:id" component={TestsLinkResolver}/>
                     <Route path="/account" render={() => (<UserAccount isCurator={this.state.isCurator}/>)}/>
                     <Route path="/user-statistic" component={UserAccountStatistic}/>

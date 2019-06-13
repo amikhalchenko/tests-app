@@ -143,7 +143,7 @@ export default class TestPassing extends Component {
                 } else {
                     return (
                         (this.props.topics.questionsFromLink) ? <Redirect to="/"/> :
-                            <TotalResultTesting sessionId={this.state.sessionId}/>
+                            <TotalResultTesting sessionId={this.state.sessionId} testsLinkDialogHandler={this.props.testsLinkDialogHandler}/>
                     );
                 }
 
