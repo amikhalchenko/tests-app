@@ -7,6 +7,7 @@ import ResultBySubjectsContainer from "../result-by-subjects/ResultBySubjectsCon
 import DifficultyDialog from '../difficulty-dialog/DifficultyDialog'
 import {withRouter, Route, Redirect} from 'react-router-dom';
 import LinkAlreadyUsedDialog from "../link-already-used-dialog/LinkAlreadyUsedDialog";
+import {decodeFromUserUrlToBase64} from "../../App";
 
 
 export default class TestPassing extends Component {
@@ -82,18 +83,36 @@ export default class TestPassing extends Component {
         if (this.props.topics.questionsFromLink || this.props.topics.questionsFromLink === null) {
             console.log(this.state.paramsId);
             if (this.state.paramsId !=='') {
-                axios.get('/questions/' + this.state.paramsId)
-                    .then(res => {
-                        this.setState((state) => {
-                            state.currentNumberOfQuestion = res.data.countOfPassedQuestions + 1 || 1;
-                            state.numberOfQuestions = res.data.countOfQuestionsInQuiz;
-                            state.questions = res.data.questions;
-                            state.sessionId = res.data.quizSession.id;
-                            state.isDataLoaded = true;
-                            state.isLinkTestAlreadyPassed = res.data.passed;
-                            return state;
+
+                if (this.state.paramsId.includes('guest')) {
+                    axios.get('/quiz/' + decodeFromUserUrlToBase64(this.state.paramsId))
+                        .then(res => {
+                            this.setState((state) => {
+                                state.currentNumberOfQuestion = res.data.countOfPassedQuestions + 1 || 1;
+                                state.numberOfQuestions = res.data.countOfQuestionsInQuiz;
+                                state.questions = res.data.questions;
+                                state.sessionId = res.data.quizSession.id;
+                                state.isDataLoaded = true;
+                                state.isLinkTestAlreadyPassed = res.data.passed;
+                                return state;
+                            });
                         });
-                    });
+                } else {
+                    axios.get('/questions/' + this.state.paramsId)
+                        .then(res => {
+                            this.setState((state) => {
+                                state.currentNumberOfQuestion = res.data.countOfPassedQuestions + 1 || 1;
+                                state.numberOfQuestions = res.data.countOfQuestionsInQuiz;
+                                state.questions = res.data.questions;
+                                state.sessionId = res.data.quizSession.id;
+                                state.isDataLoaded = true;
+                                state.isLinkTestAlreadyPassed = res.data.passed;
+                                return state;
+                            });
+                        });
+                }
+
+
 
             } else {
                 this.setState((state) => {

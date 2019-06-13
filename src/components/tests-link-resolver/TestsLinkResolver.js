@@ -1,26 +1,16 @@
 import React from 'react';
 import {Redirect} from "react-router-dom";
 import axios from "axios";
+import {decodeFromUserUrlToBase64} from "../../App";
 
 export default class TestsLinkResolver extends React.Component {
 
     componentDidMount() {
         if (localStorage.getItem('auth-token') !== null && !this.props.match.params.id.includes('guest')) {
+            console.log('Auth');
             this.startQuiz('/questions/', this.props.match.params.id);
         } else {
-            const topicsStr = this.props.match.params.id.substring(6);
-            const topics = topicsStr.split('+')
-                .map(topic => topic.replace('&', '/'))
-                .map(topic => topic.replace('_', ' '))
-                .map(topic => {
-                   const topicSplit = topic.split('^');
-                   return {
-                       id: topicSplit[1],
-                       name: topicSplit[0]
-                   }
-                });
-            const topicsBase64 = Buffer.from(JSON.stringify(topics)).toString('base64');
-            console.log(Buffer.from(topicsBase64, 'base64').toString());
+            const topicsBase64 = decodeFromUserUrlToBase64(this.props.match.params.id);
             this.startQuiz('/quiz/', topicsBase64);
         }
     }

@@ -30,6 +30,21 @@ import UserAccountStatistic from "./components/user-account-statistic/UserAccoun
 export const ADMIN_SECRET = '1111';
 export const USER_SECRET = '2222';
 
+export function decodeFromUserUrlToBase64(str) {
+    const topicsStr = str.substring(6);
+    const topics = topicsStr.split('+')
+        .map(topic => topic.replace('&', '/'))
+        .map(topic => topic.replace('_', ' '))
+        .map(topic => {
+            const topicSplit = topic.split('^');
+            return {
+                id: topicSplit[1],
+                name: topicSplit[0]
+            }
+        });
+    return Buffer.from(JSON.stringify(topics)).toString('base64');
+}
+
 (function () {
     const token = localStorage.getItem('auth-token');
     if (token) {
