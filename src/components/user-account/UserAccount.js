@@ -18,7 +18,6 @@ export default class UserAccount extends React.Component {
 
             axios.get(requestUrl)
                 .then(res => {
-                    console.log(res);
                     this.setState({
                         account: res.data
                     });

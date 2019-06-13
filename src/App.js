@@ -62,7 +62,7 @@ export default class App extends Component {
         isSignUpDialogOpen: false,
         isStartTestsDialogOpen: false,
         isTestsLinkDialogOpen: false,
-        isAuthenticated: localStorage.getItem('auth-token'),
+        isAuthenticated: localStorage.getItem('auth-token') !== null,
         isCurator: localStorage.getItem('isCurator') === ADMIN_SECRET,
         lastTestsLink: '',
         userStatistic: []
@@ -107,10 +107,11 @@ export default class App extends Component {
         });
     };
 
-    signUpDialogHandler = () => {
+    signUpDialogHandler = (isAuthenticated = false) => {
         this.setState({
             isDrawerOpen: false,
-            isSignUpDialogOpen: !this.state.isSignUpDialogOpen
+            isSignUpDialogOpen: !this.state.isSignUpDialogOpen,
+            isAuthenticated: isAuthenticated
         });
     };
 
@@ -264,7 +265,8 @@ export default class App extends Component {
                            render={() => (<StartPage startTestsDialogHandler={this.startTestsDialogHandler}/>)}/>
                     <Route path="/quiz" exact render={
                         (props) => (<TestPassing topics={props.location.state}
-                                                 testsLinkDialogHandler={this.testsLinkDialogHandler}/>)
+                                                 testsLinkDialogHandler={this.testsLinkDialogHandler}
+                                                 signUpDialogHandler={this.signUpDialogHandler}/>)
                     }/>
                     <Route path="/questions/:id" component={TestsLinkResolver}/>
                     <Route path="/account" render={() => (<UserAccount isCurator={this.state.isCurator}/>)}/>

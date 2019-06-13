@@ -16,6 +16,11 @@ export default class TotalResultTesting extends Component {
 
 
     componentDidMount() {
+
+        if (localStorage.getItem('auth-token') === null) {
+            this.props.signUpDialogHandler();
+        }
+
         axios.post('/result', {id: this.props.sessionId})
             .then(res => {
                 const topics = res.data.topicResults.map(topicResult => topicResult.topic);
