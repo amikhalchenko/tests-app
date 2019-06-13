@@ -41,7 +41,7 @@ export default class ResultBySubjectsContainer extends Component {
         return (
             <div>
                 <div className = "test-result">
-                    <h3>Switch statistic presentation</h3>
+                    <p>Statistic presentation</p>
                     <Switch
                         checked={this.state.isCards}
                         onChange={this.switchHandleChange}

@@ -13,13 +13,13 @@
     border: 2px solid black;
     border-radius: 10px;
     margin-right: 5px;
-    padding-top: 25px;
+    padding-top: 20px;
     width: 360px;
     height: 160px;
     box-shadow: 0 0 10px ;
 }
 .number, .percent{
-    font-size: 40px;
+    font-size: 30px;
     display: flex;
     justify-content: center;
 }
@@ -28,7 +28,7 @@
 }
 .percent {
     margin-bottom: 100px;
-    font-size: 50px;
+    font-size: 40px;
 }
 .more{
     padding-top: 20px;
