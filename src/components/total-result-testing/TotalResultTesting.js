@@ -5,6 +5,7 @@ import axios from 'axios'
 import { withRouter, Route } from 'react-router-dom';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import Typography from "@material-ui/core/Typography";
+import {encodeTopicsToUserUrl} from "../../App";
 
 export default class TotalResultTesting extends Component {
     state = {
@@ -17,6 +18,10 @@ export default class TotalResultTesting extends Component {
 
 
     componentDidMount() {
+        if (localStorage.getItem('auth-token') === null) {
+            this.props.signUpDialogHandler();
+        }
+
         axios.post('/result', {id: this.props.sessionId})
             .then(res => {
                 const topics = res.data.topicResults.map(topicResult => topicResult.topic);
@@ -29,17 +34,6 @@ export default class TotalResultTesting extends Component {
 
             })
     }
-
-    createLink = () => {
-        const baseUrl = 'http://localhost:3000/questions/guest=';
-        const urlForUser = this.state.topics
-            .map(topic => topic.name + '^' + topic.id)
-            .map(topic => topic.replace(' ', '_'))
-            .map(topic => topic.replace('/', '&'))
-            .reduce((reducer, currentValue) => reducer + '+' + currentValue);
-
-        this.props.testsLinkDialogHandler(baseUrl + urlForUser);
-    };
 
     render() {
         return (
@@ -62,7 +56,11 @@ export default class TotalResultTesting extends Component {
                     <Typography variant="subtitle1" color="inherit">
                         You can share the tests with your friends
                     </Typography>
-                    <Button onClick={this.createLink}>Share Link</Button>
+                    <Button onClick={() => {
+                        this.props.testsLinkDialogHandler(encodeTopicsToUserUrl(this.state.topics));
+                    }}>
+                        Share Link
+                    </Button>
 
                 </div>
             </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Redirect} from "react-router-dom";
 import axios from "axios";
-import {decodeFromUserUrlToBase64} from "../../App";
+import {decodeTopicsFromUserUrlToBase64} from "../../App";
 
 export default class TestsLinkResolver extends React.Component {
 
@@ -10,7 +10,7 @@ export default class TestsLinkResolver extends React.Component {
             console.log('Auth');
             this.startQuiz('/questions/', this.props.match.params.id);
         } else {
-            const topicsBase64 = decodeFromUserUrlToBase64(this.props.match.params.id);
+            const topicsBase64 = decodeTopicsFromUserUrlToBase64(this.props.match.params.id);
             this.startQuiz('/quiz/', topicsBase64);
         }
     }

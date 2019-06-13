@@ -7,6 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import axios from 'axios';
 import Typography from "@material-ui/core/Typography";
+import {Route} from "react-router-dom";
 
 class SignUpDialog extends React.Component {
 
@@ -24,7 +25,7 @@ class SignUpDialog extends React.Component {
         isProblemsWithEmptyFields: false
     };
 
-    registerUser = () => {
+    registerUser = (history) => {
 
         if (
             this.state.firstNameInput.length === 0
@@ -52,8 +53,11 @@ class SignUpDialog extends React.Component {
 
             axios.post('/registration', user)
                 .then(res => {
-                    console.log(res);
-                    this.props.signUpDialogHandler();
+                    const authToken = res.data.accessToken;
+                    localStorage.setItem('auth-token', authToken);
+                    axios.defaults.headers.common['auth-token'] = authToken;
+                    this.props.signUpDialogHandler(true);
+                    history.push('/account');
                 })
                 .catch(err => {
                     if (err.response.status === 400) {
@@ -182,12 +186,16 @@ class SignUpDialog extends React.Component {
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button color="primary" onClick={this.props.signUpDialogHandler}>
+                        <Button color="primary" onClick={() => this.props.signUpDialogHandler(false)}>
                             Cancel
                         </Button>
-                        <Button color="primary" onClick={this.registerUser}>
-                            Create Account
-                        </Button>
+                        <Route render={({history}) => (
+                            <Button color="primary" onClick={() => {
+                                this.registerUser(history)
+                            }}>
+                                Create Account
+                            </Button>
+                        )}/>
                     </DialogActions>
                 </Dialog>
             </div>

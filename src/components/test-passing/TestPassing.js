@@ -7,7 +7,7 @@ import ResultBySubjectsContainer from "../result-by-subjects/ResultBySubjectsCon
 import DifficultyDialog from '../difficulty-dialog/DifficultyDialog'
 import {withRouter, Route, Redirect} from 'react-router-dom';
 import LinkAlreadyUsedDialog from "../link-already-used-dialog/LinkAlreadyUsedDialog";
-import {decodeFromUserUrlToBase64} from "../../App";
+import {decodeTopicsFromUserUrlToBase64} from "../../App";
 
 
 export default class TestPassing extends Component {
@@ -215,6 +215,7 @@ export default class TestPassing extends Component {
                         (this.state.curatorParamsId !== undefined && !this.state.curatorParamsId.includes('guest')) ? <Redirect to="/"/> :
                             <TotalResultTesting sessionId={this.state.sessionId}
                                                 testsLinkDialogHandler={this.props.testsLinkDialogHandler}/>
+
                     );
                 }
 
