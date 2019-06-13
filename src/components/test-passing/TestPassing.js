@@ -92,7 +92,6 @@ export default class TestPassing extends Component {
                         state.questions = res.data.questions;
                         state.sessionId = res.data.quizSession.id;
                         state.isDataLoaded = true;
-                        state.isLinkTestAlreadyPassed = res.data.passed;
                         state.isAlreadyPassed = res.data.passed;
                         state.continueTestButton = res.data.existNewQuestions;
                         return state;
