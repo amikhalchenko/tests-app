@@ -5,28 +5,15 @@
 
 .userPassedTests>div{
     display: flex;
-    border-style: solid;
-    border-color: #949494;
-    border-width: 1px 2px 2px 1px;
-    border-radius: 5px;
-    box-shadow: 5px 5px 10px rgb(148, 148, 148);
-    margin: 20px;
-    font-size: 20px;
-    font-family: Arial;
-}
-
-.userPassedTests>div>div{
-    background-color: rgba(68,222,30,0.33)!important;
+    margin: 15px;
+    border-radius: 10px;
+    font-size: 16px;
 }
 
 .userPassedTests h6{
-    background-color: rgba(68,222,30,0.33)!important;
+    font-size: 18px;
     text-align: center;
-    border-style: solid;
-    border-color: #949494;
-    border-width: 1px 1px 1px 1px;
-    border-radius: 20px;
-    padding: 5px;
-    min-width: 100px;
+    border-radius: 11px;
+    min-width: 200px;
     margin-bottom: 5px;
 }
