@@ -55,10 +55,6 @@ class StartTestsDialog extends React.Component {
             state.difficultyDisableButton = !state.difficultyDisableButton;
             return state;
         })
-        // this.setState({
-        //     difficulty: event.target.value,
-        //     difficultyDisableButton: false
-        // })
     };
 
     handleGroupNameChange = (event) => {
@@ -73,21 +69,24 @@ class StartTestsDialog extends React.Component {
     createTests = () => {
         const baseUrl = 'http://localhost:3000/questions/';
 
-        axios.post('/group', {
-            name: this.state.groupName
-        }).then(res => {
-            const group = {
-                groupId: res.data.id,
-                topics: this.state.selectedTopics,
-                difficulties: [this.state.difficulty]
-            };
+        if (this.state.groupName.length > 0) {
 
-            let groupStr = JSON.stringify(group);
-            let groupBase64 = Buffer.from(groupStr).toString("base64");
+            axios.post('/group', {
+                name: this.state.groupName
+            }).then(res => {
+                const group = {
+                    groupId: res.data.id,
+                    topics: this.state.selectedTopics,
+                    difficulties: [this.state.difficulty]
+                };
 
-            this.props.testsLinkDialogHandler(baseUrl + groupBase64);
-            this.props.startTestsDialogHandler();
-        });
+                let groupStr = JSON.stringify(group);
+                let groupBase64 = Buffer.from(groupStr).toString("base64");
+
+                this.props.testsLinkDialogHandler(baseUrl + groupBase64);
+                this.props.startTestsDialogHandler();
+            });
+        }
 
     };
 
@@ -98,16 +97,17 @@ class StartTestsDialog extends React.Component {
                     <DialogTitle id="form-dialog-title">Start tests</DialogTitle>
                     <DialogContent>
                         {
-                            this.props.isAdmin
+                            this.props.isCurator
                                 ? (
                                     <TextField
+                                        error={this.state.groupName.length === 0}
                                         onChange={(e) => {
                                             this.handleGroupNameChange(e)
                                         }}
                                         autoFocus
                                         margin="dense"
                                         id="groupName"
-                                        label="Group name"
+                                        label={this.state.groupName.length === 0 ? 'Group name is not valid' : 'Group name'}
                                         type="text"
                                         fullWidth
                                     />
@@ -141,7 +141,7 @@ class StartTestsDialog extends React.Component {
                         </Button>
 
                         {
-                            this.props.isAdmin
+                            this.props.isCurator
                                 ? (
                                     <Button color="primary" onClick={this.createTests}>
                                         Create tests
