@@ -152,7 +152,7 @@ export default class App extends Component {
                                 !this.state.isAuthenticated
                                     ? (
                                         <AuthAppBarControls
-                                            firstButtonClickHandler={this.signUpDialogHandler}
+                                            firstButtonClickHandler={() => {this.signUpDialogHandler(false)}}
                                             firstButtonLabel={'Sign Up'}
                                             secondButtonClickHandler={this.loginDialogHandler}
                                             secondButtonLabel={'Log In'}
@@ -176,7 +176,7 @@ export default class App extends Component {
                             {
                                 localStorage.getItem('auth-token') === null
                                     ? (
-                                        <ListItem button onClick={this.signUpDialogHandler}>
+                                        <ListItem button onClick={() => {this.signUpDialogHandler(false)}}>
                                             <ListItemIcon><AccountCircle/></ListItemIcon>
                                             <ListItemText>Sign Up</ListItemText>
                                         </ListItem>
