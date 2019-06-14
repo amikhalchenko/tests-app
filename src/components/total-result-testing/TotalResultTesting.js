@@ -18,6 +18,9 @@ export default class TotalResultTesting extends Component {
 
 
     componentDidMount() {
+
+        console.log(this.props);
+
         axios.post('/result', {id: this.props.sessionId})
             .then(res => {
                 const topics = res.data.topicResults.map(topicResult => topicResult.topic);
