@@ -20,7 +20,8 @@ class StartTestsDialog extends React.Component {
     state = {
         topics: [],
         selectedTopics: [],
-        difficulty: [],
+        difficulty: '',
+        curatorDifficulty: [],
         groupName: '',
         menuItems: [{ id: 0, name: 'Просте'}, {id: 1, name: 'Середнє'}, {id:2, name: 'Складне'}]
     };
@@ -53,12 +54,20 @@ class StartTestsDialog extends React.Component {
             })
     };
     handleChange = (event) => {
-        this.setState((state) => {
-            state.difficulty.push(this.state.menuItems.filter(menuItem => menuItem.name === event.target.value)[0]);
-            state.difficultyDisableButton = !state.difficultyDisableButton;
-            state.menuItems = this.state.menuItems.filter(menuItem => menuItem.name !== event.target.value);
-            return state;
-        })
+        if (this.props.isCurator) {
+            this.setState((state) => {
+                state.curatorDifficulty.push(this.state.menuItems.filter(menuItem => menuItem.name === event.target.value)[0]);
+                state.difficultyDisableButton = !state.difficultyDisableButton;
+                state.menuItems = this.state.menuItems.filter(menuItem => menuItem.name !== event.target.value);
+                return state;
+            })
+        } else {
+            this.setState((state) => {
+                state.difficulty = event.target.value;
+                state.difficultyDisableButton = !state.difficultyDisableButton;
+                return state;
+            })
+        }
     };
 
     handleGroupNameChange = (event) => {
@@ -78,7 +87,7 @@ class StartTestsDialog extends React.Component {
             axios.post('/group', {
                 name: this.state.groupName
             }).then(res => {
-                const difficultiesStrings = this.state.difficulty.map(difficulty => difficulty.name);
+                const difficultiesStrings = this.state.curatorDifficulty.map(difficulty => difficulty.name);
                 const group = {
                     groupId: res.data.id,
                     topics: this.state.selectedTopics,
@@ -126,42 +135,63 @@ class StartTestsDialog extends React.Component {
                         </Typography>
                         <TestTopicsAutocomplete suggestions={this.state.topics} selectedTopics={this.selectedTopics}/>
                         <InputLabel htmlFor="age-difficulty">Difficulty</InputLabel>
-                        <Select
-
-                            fullWidth
-                            value={this.state.difficulty}
-                            onChange={this.handleChange}
-                            inputProps={{
-                                name: 'menuItem',
-                                id: 'difficulty',
-                            }}
-                        >
-
-                            {
-                                this.state.menuItems.map((difficulty, index) => {
-                                    return (
-                                        <MenuItem
-                                            key={index}
-                                            value={difficulty.name}
-                                        >
-                                            {difficulty.name}
-                                        </MenuItem>
-                                    )
-                                })
-                            }
-                        </Select>
 
                         {
-                            this.state.difficulty.map((difficulty, index) => {
+                            this.props.isCurator
+                            ? (
+                                    <Select
+                                        fullWidth
+                                        onChange={this.handleChange}
+                                        inputProps={{
+                                            name: 'menuItem',
+                                            id: 'difficulty',
+                                        }}
+                                    >
+
+                                        {
+                                            this.state.menuItems.map((difficulty, index) => {
+                                                return (
+                                                    <MenuItem
+                                                        key={index}
+                                                        value={difficulty.name}
+                                                    >
+                                                        {difficulty.name}
+                                                    </MenuItem>
+                                                )
+                                            })
+                                        }
+                                    </Select>
+                                )
+                                : (
+                                    <Select
+
+                                        fullWidth
+                                        value={this.state.difficulty}
+                                        onChange={this.handleChange}
+                                        inputProps={{
+                                            name: 'age',
+                                            id: 'difficulty',
+                                        }}
+                                    >
+
+                                        <MenuItem value={"Просте"}>Просте</MenuItem>
+                                        <MenuItem value={"Середнє"}>Середнє</MenuItem>
+                                        <MenuItem value={"Складне"}>Складне</MenuItem>
+                                    </Select>
+                                )
+                        }
+
+                        {
+                            this.state.curatorDifficulty.map((difficulty, index) => {
                                 return (
                                     <Chip
                                         key={index}
                                         label={difficulty.name}
                                         onDelete={() => {
-                                            const removedDifficulty = this.state.difficulty.splice(index, 1)[0];
+                                            const removedDifficulty = this.state.curatorDifficulty.splice(index, 1)[0];
                                             this.state.menuItems.splice(removedDifficulty.id, 0, removedDifficulty);
                                             this.setState({
-                                                difficulty: this.state.difficulty,
+                                                difficulty: this.state.curatorDifficulty,
                                                 menuItems: this.state.menuItems
                                             });
                                         }}
