@@ -7,11 +7,12 @@ export default class TestsLinkResolver extends React.Component {
 
     componentDidMount() {
         if (localStorage.getItem('auth-token') !== null && !this.props.match.params.id.includes('guest')) {
-            console.log('Auth');
             this.startQuiz('/questions/', this.props.match.params.id);
-        } else {
+        } else if (this.props.match.params.id.includes('guest')) {
             const topicsBase64 = decodeTopicsFromUserUrlToBase64(this.props.match.params.id);
             this.startQuiz('/quiz/', topicsBase64);
+        } else {
+            console.log('Good bye!!!');
         }
     }
 
@@ -19,14 +20,6 @@ export default class TestsLinkResolver extends React.Component {
 
                 this.props.history.push('/quiz', {
                     curatorParamsId : this.props.match.params.id,
-                    curatorTestLink : true,
-                    // questionsFromLink: res.data.questions,
-                    // sessionId: res.data.quizSession.id,
-                    // countOfPassedQuestions: res.data.countOfPassedQuestions,
-                    // countOfQuestionsInQuiz: res.data.countOfQuestionsInQuiz,
-                    // passed: res.data.passed,
-                    // existNewQuestions : res.data.existNewQuestions,
-
                 })
 
     };

@@ -12,7 +12,6 @@ export default class UserAccount extends React.Component {
     };
 
     componentDidMount() {
-
         if (localStorage.getItem('auth-token') !== null) {
             const requestUrl = this.props.isCurator ? '/account/groups' : '/account';
 
@@ -68,7 +67,7 @@ export default class UserAccount extends React.Component {
                         this.state.account.map((group, index) => {
                             if (group !== null) {
                                 return (
-                                    <GroupItem group={group} key={index}/>
+                                    <GroupItem group={group} key={index} testsLinkDialogHandler={this.props.testsLinkDialogHandler}/>
                                 )
                             } else {
                                 return null;

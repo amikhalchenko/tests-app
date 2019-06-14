@@ -27,7 +27,7 @@ export default class TestPassing extends Component {
         continueTestButton: false,
         isLinkTestAlreadyPassed: false,
         curatorParamsId: this.props.topics.curatorParamsId || undefined,
-        curatorTestLink: this.props.curatorTestLink || false,
+        unAuth: false,
     }
     postQuestion = () => {
         axios.post('/questions', this.props.topics)
@@ -112,7 +112,11 @@ export default class TestPassing extends Component {
                         return state;
                     });
                 })
-                .catch((err) => console.log(err));
+                .catch((err) => {
+                    this.setState((state)=>{
+                        state.unAuth = true;
+                    })
+                });
 
         }
 
