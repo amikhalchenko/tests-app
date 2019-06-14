@@ -8,6 +8,7 @@ import DifficultyDialog from '../difficulty-dialog/DifficultyDialog'
 import {withRouter, Route, Redirect} from 'react-router-dom';
 import LinkAlreadyUsedDialog from "../link-already-used-dialog/LinkAlreadyUsedDialog";
 import {decodeTopicsFromUserUrlToBase64} from "../../App";
+import Spinner from "../spinner/spinner";
 
 
 export default class TestPassing extends Component {
@@ -220,7 +221,7 @@ export default class TestPassing extends Component {
                 }
 
             } else {
-                return (<div>Loading...</div>)
+                return (<div className="spinner"><Spinner/></div>)
             }
         }
 

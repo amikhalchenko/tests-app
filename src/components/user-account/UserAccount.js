@@ -37,7 +37,8 @@ export default class UserAccount extends React.Component {
         if (this.state.account !== null && !this.props.isCurator) {
             return (
                 <div>
-                    <div className="userPassedTests">
+
+                    <div className="passedTests">
                         {
                             this.state.account.results.map((passedTest, index) => {
                                 return (
