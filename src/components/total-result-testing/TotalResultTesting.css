@@ -35,9 +35,12 @@
     flex-direction: column;
     align-items: center;
     padding-top: 20px;
-    display: flex;
     justify-content: center;
 }
 .MuiButton-containedPrimary{
     margin-bottom: 10px;
+}
+
+.signUpButton {
+    margin-left: 30% !important;
 }

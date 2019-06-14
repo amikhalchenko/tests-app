@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Button from '@material-ui/core/Button';
 import './TotalResultTesting.css';
 import axios from 'axios'
-import { withRouter, Route } from 'react-router-dom';
+import {withRouter, Route} from 'react-router-dom';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import Typography from "@material-ui/core/Typography";
 import {encodeTopicsToUserUrl} from "../../App";
@@ -18,10 +18,6 @@ export default class TotalResultTesting extends Component {
 
 
     componentDidMount() {
-        if (localStorage.getItem('auth-token') === null) {
-            this.props.signUpDialogHandler();
-        }
-
         axios.post('/result', {id: this.props.sessionId})
             .then(res => {
                 const topics = res.data.topicResults.map(topicResult => topicResult.topic);
@@ -39,7 +35,8 @@ export default class TotalResultTesting extends Component {
         return (
             <div className="totalResult">
                 <div className="border">
-                    <div className="number">Answers: {this.state.totalCountOfCorrectAnswers} of {this.state.totalCountOfQuestions}</div>
+                    <div
+                        className="number">Answers: {this.state.totalCountOfCorrectAnswers} of {this.state.totalCountOfQuestions}</div>
                     <div className="percent">{(this.state.totalPercent).toFixed(2)}%</div>
                 </div>
                 <div className="more">
@@ -61,6 +58,25 @@ export default class TotalResultTesting extends Component {
                     }}>
                         Share Link
                     </Button>
+
+                    {
+                        localStorage.getItem('auth-token') === null
+                            ? (
+                                <div>
+                                    <Typography variant="subtitle1" color="inherit">
+                                        If you want to save your results, you need to
+                                    </Typography>
+                                    <Button
+                                        className="signUpButton"
+                                        color="primary"
+                                        onClick={() => {this.props.signUpDialogHandler(false)}}
+                                    >
+                                        Sign Up
+                                    </Button>
+                                </div>
+                            )
+                            : null
+                    }
 
                 </div>
             </div>
