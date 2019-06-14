@@ -9,6 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import {Route} from 'react-router-dom';
 import axios from 'axios';
 import Typography from "@material-ui/core/Typography";
+import {ADMIN_SECRET, USER_SECRET} from "../../App";
 
 class LogInDialog extends React.Component {
 
@@ -50,6 +51,15 @@ class LogInDialog extends React.Component {
                 const authToken = res.data.accessToken;
                 localStorage.setItem('auth-token', authToken);
                 axios.defaults.headers.common['auth-token'] = authToken;
+
+                // set admin
+                if (res.data.curator) {
+                    localStorage.setItem('isCurator', ADMIN_SECRET);
+                } else {
+                    localStorage.setItem('isCurator', USER_SECRET);
+                }
+
+
                 this.props.loginDialogHandler(res.data.curator, true);
                 history.push('/account');
             })

@@ -14,11 +14,10 @@ export default class UserAccount extends React.Component {
     componentDidMount() {
 
         if (localStorage.getItem('auth-token') !== null) {
-            const requestUrl = this.props.isAdmin ? '/account/groups' : '/account';
+            const requestUrl = this.props.isCurator ? '/account/groups' : '/account';
 
             axios.get(requestUrl)
                 .then(res => {
-                    console.log(res);
                     this.setState({
                         account: res.data
                     });
@@ -35,14 +34,15 @@ export default class UserAccount extends React.Component {
             return <Redirect to='/'/>
         }
 
-        if (this.state.account !== null && !this.props.isAdmin) {
+        if (this.state.account !== null && !this.props.isCurator) {
             return (
                 <div>
-                    <div className="userPassedTests">
+
+                    <div className="passedTests">
                         {
                             this.state.account.results.map((passedTest, index) => {
                                 return (
-                                    <PassedTest key={index} testInformation={
+                                    <PassedTest testsLinkDialogHandler={this.props.testsLinkDialogHandler} key={index} testInformation={
                                         {
                                             date: passedTest.date,
                                             topics: passedTest.topics,
@@ -61,14 +61,18 @@ export default class UserAccount extends React.Component {
             );
         }
 
-        if (this.state.account !== null && this.props.isAdmin) {
+        if (this.state.account !== null && this.props.isCurator) {
             return (
                 <div className="userPassedTests">
                     {
                         this.state.account.map((group, index) => {
-                            return (
-                               <GroupItem group={group} key={index}/>
-                            )
+                            if (group !== null) {
+                                return (
+                                    <GroupItem group={group} key={index}/>
+                                )
+                            } else {
+                                return null;
+                            }
                         })
                     }
                 </div>

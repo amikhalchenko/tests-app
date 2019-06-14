@@ -26,6 +26,36 @@ import TestsLinkDialog from "./components/tests-link-dialog/TestsLinkDialog";
 import TestsLinkResolver from "./components/tests-link-resolver/TestsLinkResolver";
 import UserAccountStatistic from "./components/user-account-statistic/UserAccountStatistic";
 
+
+export const ADMIN_SECRET = '1111';
+export const USER_SECRET = '2222';
+
+export function decodeTopicsFromUserUrlToBase64(str) {
+    const topicsStr = str.substring(6);
+    const topics = topicsStr.split('+')
+        .map(topic => topic.replace('&', '/'))
+        .map(topic => topic.replace('_', ' '))
+        .map(topic => {
+            const topicSplit = topic.split('^');
+            return {
+                id: topicSplit[1],
+                name: topicSplit[0]
+            }
+        });
+    return Buffer.from(JSON.stringify(topics)).toString('base64');
+}
+
+export function encodeTopicsToUserUrl(topics) {
+    const baseUrl = 'http://localhost:3000/questions/guest=';
+    const encodedTopics = topics
+        .map(topic => topic.name + '^' + topic.id)
+        .map(topic => topic.replace(' ', '_'))
+        .map(topic => topic.replace('/', '&'))
+        .reduce((reducer, currentValue) => reducer + '+' + currentValue);
+
+    return baseUrl + encodedTopics;
+}
+
 (function () {
     const token = localStorage.getItem('auth-token');
     if (token) {
@@ -43,8 +73,8 @@ export default class App extends Component {
         isSignUpDialogOpen: false,
         isStartTestsDialogOpen: false,
         isTestsLinkDialogOpen: false,
-        isAuthenticated: localStorage.getItem('auth-token'),
-        isAdmin: false,
+        isAuthenticated: localStorage.getItem('auth-token') !== null,
+        isCurator: localStorage.getItem('isCurator') === ADMIN_SECRET,
         lastTestsLink: '',
         userStatistic: []
     };
@@ -53,12 +83,14 @@ export default class App extends Component {
         this.setState({
             isDrawerOpen: false,
             isAuthenticated: false,
-            isAdmin: false
+            isAdmin: false,
+            isCurator: false
         });
         axios.defaults.headers.common['auth-token'] = '';
         localStorage.removeItem('auth-token');
         localStorage.removeItem('userFirstName');
         localStorage.removeItem('userLastName');
+        localStorage.removeItem('isCurator');
         history.push('/');
     };
 
@@ -77,19 +109,20 @@ export default class App extends Component {
         this.setState({isDrawerOpen: !this.state.isDrawerOpen});
     }
 
-    loginDialogHandler = (isAdmin = false, isAuthenticated = false) => {
+    loginDialogHandler = (isCurator = false, isAuthenticated = false) => {
         this.setState({
             isDrawerOpen: false,
             isLoginDialogOpen: !this.state.isLoginDialogOpen,
             isAuthenticated: isAuthenticated,
-            isAdmin: isAdmin
+            isCurator: isCurator
         });
     };
 
-    signUpDialogHandler = () => {
+    signUpDialogHandler = (isAuthenticated = false) => {
         this.setState({
             isDrawerOpen: false,
-            isSignUpDialogOpen: !this.state.isSignUpDialogOpen
+            isSignUpDialogOpen: !this.state.isSignUpDialogOpen,
+            isAuthenticated: isAuthenticated
         });
     };
 
@@ -100,9 +133,7 @@ export default class App extends Component {
         })
     };
 
-    /**
-     * Admin only
-     */
+
     testsLinkDialogHandler = (link = '') => {
         this.setState({
             lastTestsLink: link,
@@ -132,7 +163,7 @@ export default class App extends Component {
                                 !this.state.isAuthenticated
                                     ? (
                                         <AuthAppBarControls
-                                            firstButtonClickHandler={this.signUpDialogHandler}
+                                            firstButtonClickHandler={() => {this.signUpDialogHandler(false)}}
                                             firstButtonLabel={'Sign Up'}
                                             secondButtonClickHandler={this.loginDialogHandler}
                                             secondButtonLabel={'Log In'}
@@ -156,7 +187,7 @@ export default class App extends Component {
                             {
                                 localStorage.getItem('auth-token') === null
                                     ? (
-                                        <ListItem button onClick={this.signUpDialogHandler}>
+                                        <ListItem button onClick={() => {this.signUpDialogHandler(false)}}>
                                             <ListItemIcon><AccountCircle/></ListItemIcon>
                                             <ListItemText>Sign Up</ListItemText>
                                         </ListItem>
@@ -231,7 +262,7 @@ export default class App extends Component {
                     <SignUpDialog open={this.state.isSignUpDialogOpen} signUpDialogHandler={this.signUpDialogHandler}/>
                     <StartTestsDialog open={this.state.isStartTestsDialogOpen}
                                       startTestsDialogHandler={this.startTestsDialogHandler}
-                                      isAdmin={this.state.isAdmin}
+                                      isCurator={this.state.isCurator}
                                       testsLinkDialogHandler={this.testsLinkDialogHandler}
 
                     />
@@ -243,9 +274,16 @@ export default class App extends Component {
 
                     <Route path="/" exact
                            render={() => (<StartPage startTestsDialogHandler={this.startTestsDialogHandler}/>)}/>
-                    <Route path="/quiz" exact render={(props) => (<TestPassing topics={props.location.state}/>)}/>
+                    <Route path="/quiz" exact render={
+                        (props) => (<TestPassing topics={props.location.state}
+                                                 testsLinkDialogHandler={this.testsLinkDialogHandler}
+                                                 signUpDialogHandler={this.signUpDialogHandler}/>)
+                    }/>
                     <Route path="/questions/:id" component={TestsLinkResolver}/>
-                    <Route path="/account" render={() => (<UserAccount isAdmin={this.state.isAdmin}/>)}/>
+                    <Route path="/account" render={() => (<UserAccount
+                        isCurator={this.state.isCurator}
+                        testsLinkDialogHandler={this.testsLinkDialogHandler}/>)
+                    }/>
                     <Route path="/user-statistic" component={UserAccountStatistic}/>
                     <Route path="/detailed-result"
                            render={(props) => (<ResultBySubjectsContainer sessionId={props.location.state}/>)}/>

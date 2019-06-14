@@ -3,6 +3,7 @@ import {CardContent} from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
 import GroupParticipant from "../group-participant/GroupParticipant";
+import './GroupItem.css';
 
 export default class GroupItem extends React.Component {
 
@@ -20,7 +21,7 @@ export default class GroupItem extends React.Component {
                 <Card>
                     <CardContent>
                         <Typography variant="subtitle1" color="inherit">
-                            {this.group.groupName}
+                           Group Name {this.group.groupName}
                         </Typography>
 
                         {

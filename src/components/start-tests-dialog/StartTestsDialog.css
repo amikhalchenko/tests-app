@@ -1,3 +1,7 @@
 .startTestsDialog {
   max-width: 40%;
 }
+
+.errorMessage {
+  color: red !important;
+}

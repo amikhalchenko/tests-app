@@ -7,6 +7,8 @@ import ResultBySubjectsContainer from "../result-by-subjects/ResultBySubjectsCon
 import DifficultyDialog from '../difficulty-dialog/DifficultyDialog'
 import {withRouter, Route, Redirect} from 'react-router-dom';
 import LinkAlreadyUsedDialog from "../link-already-used-dialog/LinkAlreadyUsedDialog";
+import {decodeTopicsFromUserUrlToBase64} from "../../App";
+import Spinner from "../spinner/spinner";
 
 
 export default class TestPassing extends Component {
@@ -24,8 +26,8 @@ export default class TestPassing extends Component {
         numberOfQuestions: 0,
         continueTestButton: false,
         isLinkTestAlreadyPassed: false,
-
-
+        curatorParamsId: this.props.topics.curatorParamsId || undefined,
+        curatorTestLink: this.props.curatorTestLink || false,
     }
     postQuestion = () => {
         axios.post('/questions', this.props.topics)
@@ -79,45 +81,45 @@ export default class TestPassing extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props.topics.countOfQuestionsInQuiz);
-
-        if (this.props.topics.questionsFromLink) {
-            this.setState((state) => {
-                state.currentNumberOfQuestion = this.props.topics.countOfPassedQuestions + 1 || 1;
-                state.numberOfQuestions = this.props.topics.countOfQuestionsInQuiz;
-                state.questions = this.props.topics.questionsFromLink;
-                state.sessionId = this.props.topics.sessionId;
-                state.isDataLoaded = true;
-                state.isLinkTestAlreadyPassed = this.props.topics.passed;
-                return state;
-            });
+        console.log(this.props);
+        if ( this.state.curatorParamsId === undefined ) {
+            this.postQuestion();
+        } else if ( this.state.curatorParamsId.includes('guest') ) {
+            axios.get('/quiz/' + decodeTopicsFromUserUrlToBase64(this.state.curatorParamsId))
+                .then(res => {
+                    this.setState((state) => {
+                        state.currentNumberOfQuestion = res.data.countOfPassedQuestions + 1 || 1;
+                        state.numberOfQuestions = res.data.countOfQuestionsInQuiz;
+                        state.questions = res.data.questions;
+                        state.sessionId = res.data.quizSession.id;
+                        state.isDataLoaded = true;
+                        state.isAlreadyPassed = res.data.passed;
+                        state.continueTestButton = res.data.existNewQuestions;
+                        return state;
+                    });
+                });
         } else {
 
-            axios.post('/questions', this.props.topics)
+            axios.get('/questions/' + this.state.curatorParamsId)
                 .then(res => {
-                    console.log(res.data);
-                    if (res.data.quizSession === null) {
-                        this.setState({sessionId: undefined});
-                    } else {
-                        console.log(res.data.sessionId === null);
-                        this.setState((state) => {
-                            state.currentNumberOfQuestion = res.data.countOfPassedQuestions + 1 || 1;
-                            state.numberOfQuestions = res.data.countOfQuestionsInQuiz;
-                            state.sessionId = res.data.quizSession.id;
-                            state.isDataLoaded = true;
-                            state.questions = res.data.questions;
-                            state.isAlreadyPassed = res.data.passed;
-                            return state;
-                        });
-
-                    }
+                    this.setState((state) => {
+                        state.currentNumberOfQuestion = res.data.countOfPassedQuestions + 1 || 1;
+                        state.numberOfQuestions = res.data.countOfQuestionsInQuiz;
+                        state.questions = res.data.questions;
+                        state.sessionId = res.data.quizSession.id;
+                        state.isDataLoaded = true;
+                        state.isLinkTestAlreadyPassed = res.data.passed;
+                        return state;
+                    });
                 })
+                .catch((err) => console.log(err));
+
         }
+
     }
 
     render() {
-
-        if (this.state.sessionId === undefined) {
+        if (this.state.sessionId === undefined || this.state.questions === null) {
             return (
 
                 <React.Fragment>
@@ -127,7 +129,6 @@ export default class TestPassing extends Component {
         } else {
             if (this.state.isDataLoaded === true) {
                 if (this.state.showResultBySubjects === true) {
-                    console.log(this.state.showResultBySubjects);
                     return (<ResultBySubjectsContainer sessionId={this.state.sessionId}
                                                        showResultBySubjects={this.showResultBySubjects}/>)
                 } else if (this.state.questions[this.state.i] !== undefined) {
@@ -144,13 +145,16 @@ export default class TestPassing extends Component {
                         </React.Fragment>)
                 } else {
                     return (
-                        (this.state.isLinkTestAlreadyPassed) ? <Redirect to="/"/> :
-                            <TotalResultTesting sessionId={this.state.sessionId}/>
+                        (this.state.curatorParamsId !== undefined && !this.state.curatorParamsId.includes('guest')) ? <Redirect to="/"/> :
+                            <TotalResultTesting sessionId={this.state.sessionId}
+                                                testsLinkDialogHandler={this.props.testsLinkDialogHandler}
+                                                signUpDialogHandler={this.props.signUpDialogHandler}/>
+
                     );
                 }
 
             } else {
-                return (<div>Loading...</div>)
+                return (<div className="spinner"><Spinner/></div>)
             }
         }
 

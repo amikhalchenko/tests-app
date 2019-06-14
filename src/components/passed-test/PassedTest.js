@@ -5,7 +5,8 @@ import Chip from "@material-ui/core/Chip";
 import {CardContent} from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
-import {withRouter, Route} from 'react-router-dom';
+import {Route} from 'react-router-dom';
+import {encodeTopicsToUserUrl} from "../../App";
 
 
 export default class PassedTest extends React.Component {
@@ -16,7 +17,7 @@ export default class PassedTest extends React.Component {
     };
 
     componentDidMount() {
-        console.log(this.props.testInformation);
+        console.log(this.props);
     }
 
     render() {
@@ -24,6 +25,7 @@ export default class PassedTest extends React.Component {
             topics: this.props.testInformation.topics,
             difficulty: "Просте",
         }
+
         return (
             <div className="passedTest">
                 <Card>
@@ -54,22 +56,35 @@ export default class PassedTest extends React.Component {
                             }
                         </div>
                         {
-                            (this.props.testInformation.passed === true) ? <div className="results">
-                                    <Typography className="rightAnswersPercentage" variant="subtitle1" color="inherit">
-                                        Right answers:
-                                    </Typography>
-                                    <Typography className="rightAnswersPercentage" variant="subtitle1" color="inherit">
-                                        {Math.floor(this.props.testInformation.percentOfPassingQuiz * 100) / 100 + '%'}
-                                    </Typography></div> :
-                                <div className="results"><Route render={({history}) => (
-                                    <Button color="primary" onClick={() => {
-                                        history.push('/quiz',
-                                            topic
-                                        )
-                                    }}>
-                                        Continue Test
-                                    </Button>
-                                )}/></div>
+                            (this.props.testInformation.passed === true)
+                                ? (
+                                    <div className="results">
+                                        <Typography className="rightAnswersPercentage" variant="subtitle1" color="inherit">
+                                            Right answers:
+                                        </Typography>
+                                        <Typography className="rightAnswersPercentage" variant="subtitle1" color="inherit">
+                                            {Math.floor(this.props.testInformation.percentOfPassingQuiz * 100) / 100 + '%'}
+                                        </Typography>
+                                        <Button onClick={() => {
+                                            this.props.testsLinkDialogHandler(encodeTopicsToUserUrl(this.props.testInformation.topics));
+                                        }}>
+                                            Share Link
+                                        </Button>
+                                    </div>
+                                )
+                                : (
+                                    <div className="results">
+                                        <Route render={({history}) => (
+                                            <Button color="primary" onClick={() => {
+                                                history.push('/quiz',
+                                                    topic
+                                                )
+                                            }}>
+                                                Continue Test
+                                            </Button>
+                                        )}/>
+                                    </div>
+                                )
                         }
 
                     </CardContent>
