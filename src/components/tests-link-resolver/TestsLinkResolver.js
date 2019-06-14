@@ -16,19 +16,19 @@ export default class TestsLinkResolver extends React.Component {
     }
 
     startQuiz = (url, quizRequestParam) => {
-        axios.get(url + quizRequestParam)
-            .then(res => {
+
                 this.props.history.push('/quiz', {
-                    paramsId : this.props.match.params.id,
-                    questionsFromLink: res.data.questions,
-                    sessionId: res.data.quizSession.id,
-                    countOfPassedQuestions: res.data.countOfPassedQuestions,
-                    countOfQuestionsInQuiz: res.data.countOfQuestionsInQuiz,
-                    passed: res.data.passed,
-                    existNewQuestions : res.data.existNewQuestions,
+                    curatorParamsId : this.props.match.params.id,
+                    curatorTestLink : true,
+                    // questionsFromLink: res.data.questions,
+                    // sessionId: res.data.quizSession.id,
+                    // countOfPassedQuestions: res.data.countOfPassedQuestions,
+                    // countOfQuestionsInQuiz: res.data.countOfQuestionsInQuiz,
+                    // passed: res.data.passed,
+                    // existNewQuestions : res.data.existNewQuestions,
 
                 })
-            });
+
     };
 
     render() {

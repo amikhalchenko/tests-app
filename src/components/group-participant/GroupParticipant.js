@@ -13,6 +13,7 @@ export default class GroupParticipant extends React.Component {
 
     render() {
         return (
+
             <div className="user">
                 <div className="userData">Name: {this.user.firstName}</div>
                 <div className="userData">Surname: {this.user.lastName}</div>
