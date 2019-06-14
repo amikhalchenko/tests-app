@@ -12,14 +12,17 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import TextField from "@material-ui/core/TextField";
+import Chip from "@material-ui/core/Chip";
+import CancelIcon from '@material-ui/icons/Cancel';
 
 class StartTestsDialog extends React.Component {
 
     state = {
         topics: [],
         selectedTopics: [],
-        difficulty: '',
-        groupName: ''
+        difficulty: [],
+        groupName: '',
+        menuItems: [{ id: 0, name: 'Просте'}, {id: 1, name: 'Середнє'}, {id:2, name: 'Складне'}]
     };
 
     selectedTopics = (value) => {
@@ -51,8 +54,9 @@ class StartTestsDialog extends React.Component {
     };
     handleChange = (event) => {
         this.setState((state) => {
-            state.difficulty = event.target.value;
+            state.difficulty.push(this.state.menuItems.filter(menuItem => menuItem.name === event.target.value)[0]);
             state.difficultyDisableButton = !state.difficultyDisableButton;
+            state.menuItems = this.state.menuItems.filter(menuItem => menuItem.name !== event.target.value);
             return state;
         })
     };
@@ -74,14 +78,17 @@ class StartTestsDialog extends React.Component {
             axios.post('/group', {
                 name: this.state.groupName
             }).then(res => {
+                const difficultiesStrings = this.state.difficulty.map(difficulty => difficulty.name);
                 const group = {
                     groupId: res.data.id,
                     topics: this.state.selectedTopics,
-                    difficulties: [this.state.difficulty]
+                    difficulties: difficultiesStrings
                 };
 
                 let groupStr = JSON.stringify(group);
                 let groupBase64 = Buffer.from(groupStr).toString("base64");
+
+                console.log(Buffer.from(groupBase64, 'base64').toString());
 
                 this.props.testsLinkDialogHandler(baseUrl + groupBase64);
                 this.props.startTestsDialogHandler();
@@ -125,15 +132,44 @@ class StartTestsDialog extends React.Component {
                             value={this.state.difficulty}
                             onChange={this.handleChange}
                             inputProps={{
-                                name: 'age',
+                                name: 'menuItem',
                                 id: 'difficulty',
                             }}
                         >
 
-                            <MenuItem value={"Просте"}>Просте</MenuItem>
-                            <MenuItem value={"Середнє"}>Середнє</MenuItem>
-                            <MenuItem value={"Складне"}>Складне</MenuItem>
+                            {
+                                this.state.menuItems.map((difficulty, index) => {
+                                    return (
+                                        <MenuItem
+                                            key={index}
+                                            value={difficulty.name}
+                                        >
+                                            {difficulty.name}
+                                        </MenuItem>
+                                    )
+                                })
+                            }
                         </Select>
+
+                        {
+                            this.state.difficulty.map((difficulty, index) => {
+                                return (
+                                    <Chip
+                                        key={index}
+                                        label={difficulty.name}
+                                        onDelete={() => {
+                                            const removedDifficulty = this.state.difficulty.splice(index, 1)[0];
+                                            this.state.menuItems.splice(removedDifficulty.id, 0, removedDifficulty);
+                                            this.setState({
+                                                difficulty: this.state.difficulty,
+                                                menuItems: this.state.menuItems
+                                            });
+                                        }}
+                                    />
+                                )
+                            })
+                        }
+
                     </DialogContent>
                     <DialogActions>
                         <Button color="primary" onClick={this.props.startTestsDialogHandler}>
